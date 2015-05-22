@@ -1,3 +1,5 @@
+import javax.swing.SwingUtilities;
+
 
 /**
  * Project application class
@@ -12,6 +14,7 @@ public class GameLauncher {
 	 */
 	public static void main(String[] args) {
 		
+		SwingUtilities.invokeLater(new DisplayWindow());
 		String fixedContentOfTheMap = "";
 		fixedContentOfTheMap += "[f,-];[f,-];[w,-];[w,-];[w,-];[w,-];[w,-];[f,-]\n";
 		fixedContentOfTheMap += "[w,-];[w,-];[w,-];[f,-];[f,-];[f,-];[w,-];[f,-]\n";
@@ -27,6 +30,8 @@ public class GameLauncher {
 
 		
 		new GameOfPusher(map, new EntryConsole(), new DisplayConsole()).play();
+
+		
 	}
 
 }
