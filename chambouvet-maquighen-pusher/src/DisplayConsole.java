@@ -1,3 +1,5 @@
+import javax.swing.JLabel;
+
 
 /**
  * Display messages in the console
@@ -31,10 +33,9 @@ public class DisplayConsole implements PlayerDisplay
 				if (map.getSquareAt(new Position(rowNumber, columnNumber)).getFixedContent() == null)
 					toReturn += "  ";
 				else if (map.getSquareAt(new Position(rowNumber, columnNumber)).getFixedContent() instanceof Wall)
-					toReturn += " X";
+					toReturn += " X";				
 				else if (map.getSquareAt(new Position(rowNumber, columnNumber)).getFixedContent() instanceof Exit)
-					toReturn += "E" + ((Exit)map.getSquareAt(new Position(rowNumber, columnNumber)).getFixedContent()).getExitNumber();
-				
+					toReturn += "E" + ((Exit)map.getSquareAt(new Position(rowNumber, columnNumber)).getFixedContent()).getExitNumber();	
 				if (map.getSquareAt(new Position(rowNumber, columnNumber)).getMovableContent() == null)
 					toReturn += "  ";
 				else if (map.getSquareAt(new Position(rowNumber, columnNumber)).getMovableContent() instanceof Player)
