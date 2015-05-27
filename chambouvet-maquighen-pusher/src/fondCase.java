@@ -13,8 +13,8 @@ public class fondCase extends JPanel {
 	public void paintComponent(Graphics g){
 		Image wall;
 		try {
-			wall = ImageIO.read(new File(".\\fond-marine.jpg"));
-			g.drawImage((Image) wall,0,0,500,500,this);
+			wall = ImageIO.read(new File(".\\fond2.jpg"));
+			g.drawImage((Image) wall,0,0,600,600,this);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

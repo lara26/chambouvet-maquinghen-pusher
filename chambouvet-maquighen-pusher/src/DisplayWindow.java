@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 
@@ -7,71 +8,99 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.OverlayLayout;
+import javax.swing.plaf.DimensionUIResource;
 
-public class DisplayWindow implements Runnable {
+public class DisplayWindow implements PlayerDisplay, Runnable {
+	
+	JFrame fenetre = new JFrame();
 
-	public Map maprendue(){
-		String fixedContentOfTheMap = "";
-		fixedContentOfTheMap += "[f,-];[f,-];[w,-];[w,-];[w,-];[w,-];[w,-];[f,-]\n";
-		fixedContentOfTheMap += "[w,-];[w,-];[w,-];[f,-];[f,-];[f,-];[w,-];[f,-]\n";
-		fixedContentOfTheMap += "[w,-];[1,p];[f,-];[f,1];[f,-];[f,-];[w,-];[f,-]\n";
-		fixedContentOfTheMap += "[w,-];[w,-];[w,-];[f,-];[f,2];[2,-];[w,-];[f,-]\n";
-		fixedContentOfTheMap += "[w,-];[7,-];[w,-];[w,-];[f,3];[f,-];[w,-];[f,-]\n";
-		fixedContentOfTheMap += "[w,-];[f,-];[w,-];[f,-];[3,-];[f,-];[w,-];[w,-]\n";
-		fixedContentOfTheMap += "[w,-];[f,7];[f,-];[6,6];[f,5];[f,4];[4,-];[w,-]\n";
-		fixedContentOfTheMap += "[w,-];[f,-];[f,-];[f,-];[5,-];[f,-];[f,-];[w,-]\n";
-		fixedContentOfTheMap += "[w,-];[w,-];[w,-];[w,-];[w,-];[w,-];[w,-];[w,-]\n";
-			
-		Map map = Map.parseMap(fixedContentOfTheMap);
-		return map;
+	
+	
+	public void displayDirectionChoice()
+	{
+		System.out.println("Please choose a direction using Z,Q,S,D");
 	}
+
 	
 	
-	public void run(){
-		Map map = maprendue();
+	@Override
+	public void displayMap(String formattedMap) {
+		Map map =  Map.parseMap(formattedMap);
 		int lign = map.getNumberOfRows();
 		int column = map.getNumberOfColumns();
 	
-		
-		
-		
-		JFrame fenetre = new JFrame();
 		fenetre.setTitle("Sokoban");
-		fenetre.setSize(500, 500);
-		Position posiPlayer =map.getPlayerPosition();
-		
-		
-		
-		
-		//fenetre.setContentPane(new fondCase());
-		fenetre.setLayout(new GridLayout(lign, column));
-		Icon wall = new ImageIcon(new ImageIcon(".\\wall.png").getImage().getScaledInstance(20, 20,Image.SCALE_DEFAULT));		
+		fenetre.setSize(600, 600);
+		fondCase sokobanGame = new fondCase();
+		sokobanGame.setPreferredSize(new Dimension(500, 500));
+		sokobanGame.setLayout(new GridLayout(lign, column));
+
+		Icon wall = new ImageIcon(new ImageIcon(".\\wall3.png").getImage().getScaledInstance(75, 65,Image.SCALE_DEFAULT));
+		Icon playerImg = new ImageIcon(new ImageIcon(".\\perso.png").getImage().getScaledInstance(60, 50,Image.SCALE_DEFAULT));
+		Icon boxImg = new ImageIcon(new ImageIcon(".\\box.png").getImage().getScaledInstance(60, 50,Image.SCALE_DEFAULT));
+		Icon bulle = new ImageIcon(new ImageIcon(".\\bulle.png").getImage().getScaledInstance(60, 50,Image.SCALE_DEFAULT));
 		
 		for (int i=0;i<lign;i++){
 			for (int j=0; j<column; j++){
-				Position posiCurrent = new Position(i,j);
-			//	FixedItem fixedItemCurrent = map.getFixedContentAt(posiCurrent);
-				
-				
-				//map.getSquareAt(new Position(rowNumber, columnNumber)).getFixedContent() ==
-				
-				if ((posiCurrent.getX() == posiPlayer.getX())&&(posiCurrent.getY() == posiPlayer.getY())){
-					JLabel bouh = new JLabel("P");
-					fenetre.getContentPane().add(bouh);
-				}
-/**//**/		if(map.getSquareAt(posiCurrent).getFixedContent() == null){
-					JLabel bouh1 = new JLabel("b");
-					fenetre.getContentPane().add(bouh1);
-				}
-				else{
+
+			if ((map.getSquareAt(new Position(i, j)).getFixedContent() == null) && (map.getSquareAt(new Position(i, j)).getMovableContent() == null)){
+						JLabel vide = new JLabel();
+						sokobanGame.add(vide);
+					}
+			else if (map.getSquareAt(new Position(i, j)).getMovableContent() instanceof Player){
+				JLabel player = new JLabel(playerImg);
+				sokobanGame.add(player);
+			}
+	
+			else if (map.getSquareAt(new Position(i, j)).getMovableContent() instanceof Box){
+				JLabel box = new JLabel(boxImg);
+				sokobanGame.add(box);
+			}
+	
+	
+			else if(map.getSquareAt(new Position(i, j)).getFixedContent() instanceof Wall){
 					JLabel fixedItem = new JLabel(wall);
-					fenetre.getContentPane().add(fixedItem);	
-			
+					sokobanGame.add(fixedItem);	
 				}
+
+			else if (map.getSquareAt(new Position(i, j)).getFixedContent() instanceof Exit){
+					JLabel exit = new JLabel(bulle);
+					sokobanGame.add(exit);	
+				}
+			
 			}
 		}
-		
+
+		fenetre.getContentPane().add(sokobanGame);
 		fenetre.setVisible(true);
+		
 	}
+	
+	public void run(){
+		fenetre.setVisible(true);
+		
+	}
+	
+	public void displayVictoryMessage()
+	{
+		System.out.println("Victory !");
+	}
+	
+	public void displayInvalidDirectionMessage()
+	{
+		System.out.println("Invalid direction");
+	}
+	
+	public void displayHowToGiveUpMessage()
+	{
+		System.out.println("Type \"give up\" to stop your game");
+	}
+	
+	public void displayGiveUpMessage()
+	{
+		System.out.println("You give up, pusher's stronger than you!");
+	}
+
 }
 
