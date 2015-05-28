@@ -10,6 +10,10 @@ import javax.swing.JPanel;
 
 
 public class fondCase extends JPanel {
+	public fondCase(){
+		super();
+	}
+	
 	public void paintComponent(Graphics g){
 		Image wall;
 		try {

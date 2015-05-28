@@ -27,8 +27,7 @@ public class GameLauncher {
 		fixedContentOfTheMap += "[w,-];[w,-];[w,-];[w,-];[w,-];[w,-];[w,-];[w,-]\n";
 			
 		Map map = Map.parseMap(fixedContentOfTheMap);
-
-		
+	
 		new GameOfPusher(map, new EntryConsole(), new DisplayConsole()).play();
 
 		

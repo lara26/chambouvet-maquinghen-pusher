@@ -17,11 +17,7 @@ public class DisplaySokoban {
 		fixedContentOfTheMap += "[w,-];[w,-];[w,-];[w,-];[w,-];[w,-];[w,-];[w,-]\n";
 			
 		Map map = Map.parseMap(fixedContentOfTheMap);
-		
-		/*DisplayWindow affichage = new DisplayWindow();
-		affichage.displayMap(fixedContentOfTheMap);
-		SwingUtilities.invokeLater(new DisplayWindow());*/
-		//DisplayWindow.displayDirectionChoice();
+	
 		new GameOfPusher(map, new EntryConsole(), new DisplayWindow()).play();
 	
 	}

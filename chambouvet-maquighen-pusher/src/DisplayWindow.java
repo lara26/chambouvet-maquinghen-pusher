@@ -2,6 +2,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -14,8 +17,7 @@ import javax.swing.plaf.DimensionUIResource;
 public class DisplayWindow implements PlayerDisplay, Runnable {
 	
 	JFrame fenetre = new JFrame();
-
-	
+		
 	
 	public void displayDirectionChoice()
 	{
@@ -32,6 +34,7 @@ public class DisplayWindow implements PlayerDisplay, Runnable {
 	
 		fenetre.setTitle("Sokoban");
 		fenetre.setSize(600, 600);
+		fenetre.setResizable(false);
 		fondCase sokobanGame = new fondCase();
 		sokobanGame.setPreferredSize(new Dimension(500, 500));
 		sokobanGame.setLayout(new GridLayout(lign, column));
